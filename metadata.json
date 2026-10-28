@@ -1,0 +1,10 @@
+{
+  "name": "Karnataka Gram Panchayat Janahita Portal",
+  "description": "Official Karnataka Gram Panchayat public grievance redressal and citizen complaint portal with anonymous whistleblower protection, real-time office schedule, and 5-year election term administration.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

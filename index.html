@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Karnataka Gram Panchayat Janahita Portal</title>
+    <meta name="description" content="Official Karnataka Gram Panchayat public grievance redressal and citizen complaint portal with anonymous whistleblower protection, real-time office schedule, and 5-year election term administration." />
+    <meta property="og:title" content="Karnataka Gram Panchayat Janahita Portal" />
+    <meta property="og:description" content="Official Karnataka Gram Panchayat public grievance redressal and citizen complaint portal with anonymous whistleblower protection, real-time office schedule, and 5-year election term administration." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <!-- Path normalization script for GitHub Pages -->
+    <script>
+      (function() {
+        // If visiting repo path without trailing slash on GitHub Pages, add trailing slash so relative paths ./assets/ resolve correctly
+        var p = window.location.pathname;
+        if (p && !p.endsWith('/') && !p.split('/').pop().includes('.')) {
+          window.location.replace(p + '/' + window.location.search + window.location.hash);
+        }
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Tiro+Kannada:ital@0;1&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen">
+    <div id="root">
+      <!-- Initial Loading / Diagnostic Fallback Screen -->
+      <!-- This content will be instantly replaced when React renders. If a blank screen or setup issue occurs, this provides immediate visibility and resolution instructions. -->
+      <div style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #f8fafc; font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; padding: 1.5rem; text-align: center;">
+        <div style="background: white; border: 1px solid #cbd5e1; border-radius: 1.25rem; padding: 2.25rem 2rem; max-width: 520px; width: 100%; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);">
+          <div style="width: 52px; height: 52px; margin: 0 auto 1.25rem; border: 4px solid #dcfce7; border-top-color: #15803d; border-radius: 50%; animation: gp-spin 1s linear infinite;"></div>
+          <style>
+            @keyframes gp-spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          </style>
+          <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #b45309; font-weight: 700; display: block; margin-bottom: 0.25rem;">
+            ಕರ್ನಾಟಕ ಸರ್ಕಾರ • Govt. of Karnataka
+          </span>
+          <h1 style="font-size: 1.25rem; font-weight: 800; color: #1e293b; margin: 0 0 0.5rem; line-height: 1.3;">
+            ಗ್ರಾಮ ಪಂಚಾಯತ್ ಜನಹಿತ ಪೋರ್ಟಲ್
+          </h1>
+          <p style="font-size: 0.875rem; color: #64748b; margin: 0 0 1.25rem;">
+            Karnataka Gram Panchayat Janahita Portal is initializing...
+          </p>
+
+          <!-- Automatic Diagnostic Info: Revealed only if applet fails to mount after 3 seconds -->
+          <div id="gp-deploy-hint" style="display: none; text-align: left; background-color: #fffbeb; border: 1px solid #fef3c7; border-radius: 0.75rem; padding: 1rem; margin-top: 1rem; font-size: 0.8125rem; color: #92400e;">
+            <p style="font-weight: 700; margin: 0 0 0.5rem;">GitHub Pages Deployment Diagnostic:</p>
+            <ol style="margin: 0; padding-left: 1.25rem; line-height: 1.5;">
+              <li style="margin-bottom: 0.35rem;">Verify that GitHub Pages is serving the compiled <strong>dist/</strong> directory (or GitHub Actions), not the raw repository root <code>/</code>.</li>
+              <li style="margin-bottom: 0.35rem;">If using manual branch deployment, publish the contents of <code>dist/</code> to the <code>gh-pages</code> branch.</li>
+              <li>Press <button onclick="localStorage.clear(); window.location.reload();" style="border: 1px solid #b45309; background: white; padding: 2px 8px; border-radius: 4px; font-weight: 600; cursor: pointer;">Clear Cache & Reload</button> to reset any stale local storage.</li>
+            </ol>
+          </div>
+          <script>
+            setTimeout(function() {
+              var hint = document.getElementById('gp-deploy-hint');
+              if (hint) hint.style.display = 'block';
+            }, 3000);
+          </script>
+        </div>
+      </div>
+    </div>
+    <noscript>
+      <div style="padding: 2rem; text-align: center; font-family: sans-serif; color: #b91c1c;">
+        Please enable JavaScript in your browser to access the Karnataka Gram Panchayat Janahita Portal.
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
