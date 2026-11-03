@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "tsx server.ts",
     "start": "node server.ts",
-    "build": "vite build",
+    "build": "vite build && rm -rf docs && cp -r dist docs",
     "preview": "vite preview",
-    "clean": "rm -rf dist server.js",
+    "clean": "rm -rf dist docs server.js",
     "lint": "tsc --noEmit",
     "predeploy": "npm run build",
     "deploy": "npx -y gh-pages -d dist"

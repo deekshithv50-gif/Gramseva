@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Karnataka Gram Panchayat Janahita Portal</title>
+    <meta name="description" content="Official Karnataka Gram Panchayat public grievance redressal and citizen complaint portal with anonymous whistleblower protection, real-time office schedule, and 5-year election term administration." />
+    <meta property="og:title" content="Karnataka Gram Panchayat Janahita Portal" />
+    <meta property="og:description" content="Official Karnataka Gram Panchayat public grievance redressal and citizen complaint portal with anonymous whistleblower protection, real-time office schedule, and 5-year election term administration." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <!-- Path normalization & auto-router for GitHub Pages -->
+    <script>
+      (function() {
+        var isGithub = window.location.hostname.endsWith('github.io');
+        var path = window.location.pathname;
+
+        // Ensure trailing slash on GitHub Pages so relative paths ./assets/ resolve correctly
+        if (isGithub && path && !path.endsWith('/') && !path.split('/').pop().includes('.')) {
+          window.location.replace(path + '/' + window.location.search + window.location.hash);
+          return;
+        }
+
+        // Flag if uncompiled root might need automatic forward to /docs/
+        if (isGithub && !path.includes('/docs')) {
+          window.__GP_GITHUB_ROOT_CHECK__ = true;
+        }
+      })();
+    </script>
+
+    <!-- Optimized font loading with font-display swap to reduce network lag -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Tiro+Kannada:ital@0;1&display=swap" rel="stylesheet">
+    <script type="module" crossorigin src="./assets/index-7FqY0QoR.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DU7d8_nP.css">
+  </head>
+  <body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen">
+    <div id="root">
+      <!-- Initial Loading Screen with Low-Data Visual Indicator -->
+      <div id="gp-init-screen" style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #f8fafc; font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; padding: 1.5rem; text-align: center;">
+        <div style="background: white; border: 1px solid #cbd5e1; border-radius: 1.25rem; padding: 2.25rem 2rem; max-width: 520px; width: 100%; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);">
+          <div style="width: 52px; height: 52px; margin: 0 auto 1.25rem; border: 4px solid #dcfce7; border-top-color: #15803d; border-radius: 50%; animation: gp-spin 1s linear infinite;"></div>
+          <style>
+            @keyframes gp-spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          </style>
+          <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #b45309; font-weight: 700; display: block; margin-bottom: 0.25rem;">
+            ಕರ್ನಾಟಕ ಸರ್ಕಾರ • Govt. of Karnataka
+          </span>
+          <h1 style="font-size: 1.25rem; font-weight: 800; color: #1e293b; margin: 0 0 0.5rem; line-height: 1.3;">
+            ಗ್ರಾಮ ಪಂಚಾಯತ್ ಜನಹಿತ ಪೋರ್ಟಲ್
+          </h1>
+          <p style="font-size: 0.875rem; color: #64748b; margin: 0 0 1.25rem;">
+            Karnataka Gram Panchayat Janahita Portal is initializing...
+          </p>
+
+          <!-- Automatic Resolution Helper -->
+          <div id="gp-deploy-hint" style="display: none; text-align: left; background-color: #fffbeb; border: 1px solid #fef3c7; border-radius: 0.75rem; padding: 1rem; margin-top: 1rem; font-size: 0.8125rem; color: #92400e;">
+            <p style="font-weight: 700; margin: 0 0 0.5rem;">GitHub Pages Production Resolver:</p>
+            <p style="margin: 0 0 0.75rem; line-height: 1.4;">
+              If your repository branch is serving uncompiled source code, open the built portal version directly:
+            </p>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button onclick="window.location.replace(window.location.pathname.replace(/\/$/, '') + '/docs/');" style="background-color: #166534; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.75rem;">
+                Open Built Portal (/docs)
+              </button>
+              <button onclick="localStorage.clear(); window.location.reload();" style="border: 1px solid #b45309; background: white; padding: 6px 12px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.75rem; color: #92400e;">
+                Clear Cache & Reload
+              </button>
+            </div>
+          </div>
+          <script>
+            setTimeout(function() {
+              var hint = document.getElementById('gp-deploy-hint');
+              if (hint) hint.style.display = 'block';
+            }, 2500);
+          </script>
+        </div>
+      </div>
+    </div>
+    <noscript>
+      <div style="padding: 2rem; text-align: center; font-family: sans-serif; color: #b91c1c;">
+        Please enable JavaScript in your browser to access the Karnataka Gram Panchayat Janahita Portal.
+      </div>
+    </noscript>
+    <script>
+      // Automatic failover for GitHub Pages branch deployments
+      if (window.__GP_GITHUB_ROOT_CHECK__) {
+        setTimeout(function() {
+          var initScreen = document.getElementById('gp-init-screen');
+          // If after 2 seconds React has not mounted, auto-forward to /docs/ where the compiled site is
+          if (initScreen && !window.location.pathname.includes('/docs')) {
+            var target = window.location.pathname.replace(/\/$/, '') + '/docs/';
+            window.location.replace(target + window.location.search + window.location.hash);
+          }
+        }, 2200);
+      }
+    </script>
+  </body>
+</html>
