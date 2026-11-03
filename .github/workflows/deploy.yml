@@ -29,16 +29,27 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
+      - name: Locate project, install dependencies and build
+        id: build_step
         run: |
+          TARGET_DIR=$(find . -maxdepth 2 -name "package.json" -not -path "*/node_modules/*" -exec dirname {} \; | head -n 1)
+          if [ -z "$TARGET_DIR" ]; then
+            TARGET_DIR="."
+          fi
+          echo "Found project in: $TARGET_DIR"
+          cd "$TARGET_DIR"
+
           if [ -f package-lock.json ]; then
             npm ci || npm install --legacy-peer-deps
           else
             npm install --legacy-peer-deps
           fi
 
-      - name: Build production bundle
-        run: npm run build
+          npm run build
+
+          # Absolute path to dist folder
+          FULL_DIST=$(pwd)/dist
+          echo "dist_path=$FULL_DIST" >> $GITHUB_OUTPUT
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -46,7 +57,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: ${{ steps.build_step.outputs.dist_path || './dist' }}
 
       - name: Deploy to GitHub Pages
         id: deployment
