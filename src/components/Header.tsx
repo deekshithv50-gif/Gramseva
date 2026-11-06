@@ -17,7 +17,9 @@ import { KarnatakaEmblem } from '../utils/karnatakaEmblem';
 import { GramPanchayatInfo, UserSession, OfficeStatusResult } from '../types';
 import { getOfficeStatus } from '../utils/officeHours';
 import { useLanguage } from '../context/LanguageContext';
+import { useTheme } from '../context/ThemeContext';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { ThemeSelector } from './ThemeSelector';
 
 interface HeaderProps {
   panchayat: GramPanchayatInfo;
@@ -45,6 +47,7 @@ export const Header: React.FC<HeaderProps> = ({
   onLogout,
 }) => {
   const { t, isKannada, isEnglish } = useLanguage();
+  const { theme, isDark } = useTheme();
   const [officeStatus, setOfficeStatus] = useState<OfficeStatusResult>(getOfficeStatus());
 
   useEffect(() => {
@@ -55,9 +58,9 @@ export const Header: React.FC<HeaderProps> = ({
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-emerald-800/20 shadow-sm">
+    <header className={`sticky top-0 z-40 ${isDark ? 'bg-slate-900/95 text-slate-100' : 'bg-white/95 text-slate-900'} backdrop-blur border-b ${theme.borderClass} shadow-sm`}>
       {/* Top Karnataka Tricolor & Helpline Ribbon */}
-      <div className="bg-gradient-to-r from-amber-600 via-emerald-800 to-amber-700 text-white text-xs px-3 py-1.5 sm:px-6">
+      <div className={`bg-gradient-to-r ${theme.headerGradient} text-white text-xs px-3 py-1.5 sm:px-6 transition-all duration-300`}>
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
           {/* Government Identity */}
           <div className="flex items-center gap-2">
@@ -152,15 +155,18 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </div>
 
-          {/* Language Switcher, Location Picker & User Controls */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Language Switcher, Theme Options, Location Picker & User Controls */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5">
+            {/* Dedicated Theme Selector with 5 Karnataka palettes */}
+            <ThemeSelector />
+
             {/* Dedicated Language Switcher (Strictly English and Kannada only) */}
             <LanguageSwitcher variant="header" />
 
             {/* Location selector trigger */}
             <button
               onClick={onOpenLocation}
-              className="inline-flex items-center gap-1.5 text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-900 px-2.5 sm:px-3 py-1.5 rounded-lg border border-emerald-300 font-semibold transition cursor-pointer shadow-2xs"
+              className="inline-flex items-center gap-1.5 text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-900 px-2 sm:px-3 py-1.5 rounded-lg border border-emerald-300 font-semibold transition cursor-pointer shadow-2xs"
               title={t('ಗ್ರಾಮ ಪಂಚಾಯತಿ ಬದಲಾಯಿಸಿ (ಜಿಲ್ಲೆ ಮತ್ತು ತಾಲೂಕು)', 'Change Gram Panchayat (District & Taluk)')}
             >
               <MapPin className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
@@ -173,14 +179,14 @@ export const Header: React.FC<HeaderProps> = ({
                 </span>
               </div>
               <span className="text-[10px] bg-emerald-700 text-white font-bold px-1.5 py-0.5 rounded shadow-2xs">
-                {t('ಗ್ರಾ.ಪಂ ಬದಲಿಸಿ', 'Change GP')}
+                {t('ಬದಲಿಸಿ', 'Change')}
               </span>
             </button>
 
             {/* Public Share & Notice Board QR Trigger */}
             <button
               onClick={onOpenShare}
-              className="inline-flex items-center gap-1.5 text-xs bg-amber-50 hover:bg-amber-100 text-amber-900 px-3 py-1.5 rounded-lg border border-amber-300 font-bold transition cursor-pointer shadow-2xs"
+              className="inline-flex items-center gap-1.5 text-xs bg-amber-50 hover:bg-amber-100 text-amber-900 px-2.5 sm:px-3 py-1.5 rounded-lg border border-amber-300 font-bold transition cursor-pointer shadow-2xs"
               title={t('ಸಾರ್ವಜನಿಕ ಲಿಂಕ್ ಮತ್ತು ನೋಟಿಸ್ ಬೋರ್ಡ್ ಕ್ಯೂಆರ್', 'Public Access URL & Notice Board QR Code')}
             >
               <Share2 className="w-3.5 h-3.5 text-amber-700" />
@@ -191,18 +197,31 @@ export const Header: React.FC<HeaderProps> = ({
             {user ? (
               <div className="flex items-center gap-2">
                 <div className="bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg text-right hidden sm:block">
-                  <div className="text-xs font-bold text-slate-800 flex items-center gap-1 justify-end">
-                    {user.role === 'official_pdo' ? (
+                  <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5 justify-end">
+                    {user.authProvider === 'google' ? (
+                      <span className="w-4 h-4 rounded-full bg-white border border-slate-300 flex items-center justify-center shrink-0">
+                        <svg className="w-2.5 h-2.5" viewBox="0 0 24 24">
+                          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        </svg>
+                      </span>
+                    ) : user.role === 'official_pdo' ? (
                       <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
                     ) : (
                       <User className="w-3 h-3 text-emerald-700" />
                     )}
-                    <span>{user.displayName || user.userId}</span>
+                    <span className="truncate max-w-[110px]">{user.displayName || user.userId}</span>
                   </div>
                   <div className="text-[10px] text-slate-500 font-mono">
-                    {user.role === 'official_pdo'
-                      ? t('ಪಿ.ಡಿ.ಒ ಕಚೇರಿ ಡೆಸ್ಕ್', 'PDO Civil Desk')
-                      : `+91 ${user.phoneNumber.slice(0, 5)}*****`}
+                    {user.authProvider === 'google' && user.email ? (
+                      <span className="text-blue-700 font-semibold">{user.email.split('@')[0]}@..</span>
+                    ) : user.role === 'official_pdo' ? (
+                      t('ಪಿ.ಡಿ.ಒ ಕಚೇರಿ ಡೆಸ್ಕ್', 'PDO Civil Desk')
+                    ) : (
+                      `+91 ${user.phoneNumber.slice(0, 5)}*****`
+                    )}
                   </div>
                 </div>
                 <button
@@ -222,10 +241,17 @@ export const Header: React.FC<HeaderProps> = ({
                 </span>
                 <button
                   onClick={onOpenAuth}
-                  className="inline-flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg shadow-sm transition cursor-pointer"
-                  title={t('ನಾಗರಿಕರ ಲಾಗಿನ್', 'Citizen Sign In with Mobile & OTP')}
+                  className={`inline-flex items-center gap-1.5 ${theme.buttonPrimary} text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg shadow-sm transition cursor-pointer`}
+                  title={t('ನಾಗರಿಕರ ಲಾಗಿನ್ (Google / Mobile)', 'Citizen Sign In with Google or Mobile OTP')}
                 >
-                  <ShieldCheck className="w-4 h-4 text-emerald-200" />
+                  <span className="w-3.5 h-3.5 rounded-full bg-white flex items-center justify-center">
+                    <svg className="w-2.5 h-2.5" viewBox="0 0 24 24">
+                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                  </span>
                   <span>{t('ಪ್ರವೇಶ', 'Login')}</span>
                 </button>
               </div>

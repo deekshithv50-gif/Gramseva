@@ -14,9 +14,11 @@ import { NotificationToast } from './components/NotificationToast';
 import { AccessibilityToolbar, AccessibilitySettings } from './components/AccessibilityToolbar';
 import { LikedDocumentsModal } from './components/LikedDocumentsModal';
 import { ReportAnalyticsView } from './components/ReportAnalyticsView';
+import { MovingTaskTicker } from './components/MovingTaskTicker';
 import { KarnatakaEmblem } from './utils/karnatakaEmblem';
 import { api } from './utils/api';
 import { useLanguage } from './context/LanguageContext';
+import { useTheme } from './context/ThemeContext';
 import {
   DEFAULT_GRAM_PANCHAYAT,
   INITIAL_COMPLAINTS,
@@ -53,6 +55,7 @@ import { getOfficeStatus } from './utils/officeHours';
 
 export default function App() {
   const { language, setLanguage, t, isKannada, isEnglish } = useLanguage();
+  const { theme, isDark } = useTheme();
 
   // Local storage backed state with bulletproof error handling
   const [panchayat, setPanchayat] = useState<GramPanchayatInfo>(() => {
@@ -358,7 +361,7 @@ export default function App() {
 
   return (
     <div
-      className={`min-h-screen relative font-sans flex flex-col text-slate-900 selection:bg-emerald-200 ${fontScaleClass} ${highContrastClass} ${dyslexicClass} ${reducedMotionClass}`}
+      className={`min-h-screen relative font-sans flex flex-col ${theme.bgClass} ${isDark ? 'text-slate-100' : 'text-slate-900'} selection:bg-emerald-200 transition-colors duration-300 ${fontScaleClass} ${highContrastClass} ${dyslexicClass} ${reducedMotionClass}`}
     >
       {/* Screen Reader Live Announcement Region */}
       <div
@@ -424,6 +427,13 @@ export default function App() {
         onLogout={() => {
           setUser(null);
           setSrAnnouncement(t('ಯಶಸ್ವಿಯಾಗಿ ನಿರ್ಗಮಿಸಲಾಗಿದೆ.', 'Logged out successfully.'));
+        }}
+      />
+
+      {/* Moving Tasks Live Ticker (Animates tasks from bottom to top with instant jump & Move to Top button) */}
+      <MovingTaskTicker
+        onSelectTask={(taskId) => {
+          handleTabChange('track');
         }}
       />
 

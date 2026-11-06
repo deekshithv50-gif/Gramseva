@@ -16,6 +16,7 @@ import {
   Download,
   Eye,
   Sparkles,
+  ArrowUpDown,
 } from 'lucide-react';
 import { Complaint, ComplaintStatus, UserSession, TrackedDocumentRecord } from '../types';
 import { COMPLAINT_CATEGORIES } from '../data/panchayatData';
@@ -87,6 +88,7 @@ export const ComplaintTracker: React.FC<ComplaintTrackerProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedVillageFilter, setSelectedVillageFilter] = useState('all');
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState('all');
+  const [taskSortOrder, setTaskSortOrder] = useState<'newest_first' | 'oldest_first'>('newest_first');
   const [activeComplaintModal, setActiveComplaintModal] = useState<Complaint | null>(null);
   const [showLikedDocsModal, setShowLikedDocsModal] = useState(false);
   const [trackedDocs, setTrackedDocs] = useState<TrackedDocumentRecord[]>([]);
@@ -165,6 +167,12 @@ export const ComplaintTracker: React.FC<ComplaintTrackerProps> = ({
       selectedCategoryFilter === 'all' || c.category === selectedCategoryFilter;
 
     return matchesSearch && matchesVillage && matchesCategory;
+  }).sort((a, b) => {
+    if (taskSortOrder === 'newest_first') {
+      return new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime();
+    } else {
+      return new Date(a.submittedAt).getTime() - new Date(b.submittedAt).getTime();
+    }
   });
 
   return (
@@ -283,6 +291,21 @@ export const ComplaintTracker: React.FC<ComplaintTrackerProps> = ({
             <option value="Kattigenahalli">{t('ಕತ್ತಿಗೇನಹಳ್ಳಿ', 'Kattigenahalli')}</option>
             <option value="Yelagere Gate">{t('ಯಲಗೆರೆ ಗೇಟ್', 'Yelagere Gate')}</option>
           </select>
+
+          {/* Task Order / Direction Toggle (Bottom to Top / Newest First) */}
+          <button
+            type="button"
+            onClick={() => setTaskSortOrder((prev) => (prev === 'newest_first' ? 'oldest_first' : 'newest_first'))}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-300 rounded-lg text-slate-700 font-bold text-xs transition cursor-pointer shadow-2xs"
+            title={t('ಕಾರ್ಯಗಳ ಕ್ರಮ ಬದಲಾಯಿಸಿ (ಕೆಳಗಿಂದ ಮೇಲಕ್ಕೆ / ಹೊಸದು ಮೊದಲು)', 'Change task order (Newest on top / Oldest on top)')}
+          >
+            <ArrowUpDown className="w-3.5 h-3.5 text-emerald-700" />
+            <span>
+              {taskSortOrder === 'newest_first'
+                ? t('ಕಾರ್ಯಗಳು: ಹೊಸದು ಮೊದಲು ↑', 'Tasks: Newest on Top ↑')
+                : t('ಕಾರ್ಯಗಳು: ಹಳೆಯದು ಮೊದಲು ↓', 'Tasks: Oldest on Top ↓')}
+            </span>
+          </button>
 
           <span className="text-slate-400 text-xs ml-auto">
             {t('ಒಟ್ಟು ಫಲಿತಾಂಶಗಳು:', 'Total Results:')} {filteredComplaints.length}

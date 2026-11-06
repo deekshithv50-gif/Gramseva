@@ -165,6 +165,9 @@ export interface UserSession {
   role: 'citizen' | 'official_pdo' | 'official_president' | 'official_member';
   displayName?: string;
   verifiedAt?: string;
+  email?: string;
+  avatarUrl?: string;
+  authProvider?: 'phone_otp' | 'google' | 'pdo_portal';
 }
 
 export interface OfficeStatusResult {
